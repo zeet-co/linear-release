@@ -1,0 +1,47 @@
+{
+  "name": "linear-release",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/linear-release/src",
+  "projectType": "library",
+  "targets": {
+    "run": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "./node_modules/.bin/nx run linear-release:build && node dist/packages/linear-release/src/cli/main.js"
+      }
+    },
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/linear-release",
+        "main": "packages/linear-release/src/index.ts",
+        "tsConfig": "packages/linear-release/tsconfig.lib.json",
+        "assets": ["packages/linear-release/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/linear-release/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/linear-release/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
