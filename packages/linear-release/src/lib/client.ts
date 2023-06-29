@@ -1,8 +1,11 @@
-import { LinearClient, LinearFetch, User } from '@linear/sdk';
+import { LinearClient } from '@linear/sdk';
+import { Octokit } from '@octokit/rest';
+
 import config from './config';
 
-const linearClient = new LinearClient({ apiKey: config.linearApiKey });
+const linear = new LinearClient({ apiKey: config.linearApiKey });
+const github = new Octokit({
+  auth: config.githubApiKey,
+});
 
-async function getCurrentUser(): LinearFetch<User> {
-  return linearClient.viewer;
-}
+export { github, linear };

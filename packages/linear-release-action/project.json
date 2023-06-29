@@ -10,7 +10,7 @@
       "defaultConfiguration": "production",
       "options": {
         "platform": "node",
-        "outputPath": "dist/packages/linear-release-action",
+        "outputPath": "packages/linear-release-action/dist",
         "format": ["cjs"],
         "bundle": false,
         "main": "packages/linear-release-action/src/main.ts",
