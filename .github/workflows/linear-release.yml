@@ -18,6 +18,7 @@ jobs:
         uses: zeet-co/linear-release/packages/linear-release-action@main
         env:
           LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # with:
         #   team: 'ZEET'
         #   from: 'In Staging'
