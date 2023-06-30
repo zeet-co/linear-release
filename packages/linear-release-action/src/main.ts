@@ -8,6 +8,8 @@ import {
   getPullRequests,
   updateLinearState,
 } from '@zeet/linear-release';
+import { exec } from 'child_process';
+import { promisify } from 'util';
 
 const linearTeam = 'ZEET';
 const fromtState = 'In Staging';
@@ -17,6 +19,15 @@ async function processPushEvent(event: PushEvent): Promise<void> {
   // log before after
   core.info(`The before commit is: ${event.before}`);
   core.info(`The after commit is: ${event.after}`);
+
+  // run ls in the current directory
+  const ls = await promisify(exec)('ls');
+  core.info(ls.stdout);
+
+  const ls2 = await promisify(exec)('ls', {
+    cwd: '.',
+  });
+  core.info(ls2.stdout);
 
   const pullRequests = await getPullRequests('.', event.before, event.after);
   core.info(`The pull requests are: ${pullRequests}`);
