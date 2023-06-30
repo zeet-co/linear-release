@@ -11,9 +11,13 @@ on:
 
 jobs:
   linear-release:
+    runs-on: ubuntu-latest
     steps:
-    - name: Linear Release
-        uses: zeet-co/linear-release/packages/linear-release-action
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Linear Release
+        uses: zeet-co/linear-release/packages/linear-release-action@main
         # with:
         #   team: 'ZEET'
         #   from: 'In Staging'
