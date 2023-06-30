@@ -8,8 +8,6 @@ import {
   getPullRequests,
   updateLinearState,
 } from '@zeet/linear-release';
-import { exec } from 'child_process';
-import { promisify } from 'util';
 
 const linearTeam = 'ZEET';
 const fromtState = 'In Staging';
