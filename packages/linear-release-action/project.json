@@ -1,0 +1,83 @@
+{
+  "name": "linear-release-action",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/linear-release-action/src",
+  "projectType": "application",
+  "targets": {
+    "package": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npx esbuild packages/linear-release-action/src/main.ts --platform=node --bundle --outdir=packages/linear-release-action/dist"
+      }
+    },
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/packages/linear-release-action",
+        "format": ["cjs"],
+        "main": "packages/linear-release-action/src/main.ts",
+        "tsConfig": "packages/linear-release-action/tsconfig.app.json",
+        "assets": ["packages/linear-release-action/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "linear-release-action:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "linear-release-action:build:development"
+        },
+        "production": {
+          "buildTarget": "linear-release-action:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/linear-release-action/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/linear-release-action/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

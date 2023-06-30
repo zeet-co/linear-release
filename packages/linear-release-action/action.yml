@@ -1,0 +1,6 @@
+name: "Linear Release"
+description: "move linear tickets automatically"
+author: "zeet"
+runs:
+  using: "node16"
+  main: "dist/main.js"
