@@ -4,15 +4,21 @@
   "sourceRoot": "packages/linear-release-action/src",
   "projectType": "application",
   "targets": {
+    "package": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npx esbuild packages/linear-release-action/src/main.ts --platform=node --bundle --minify --outdir=packages/linear-release-action/dist"
+      }
+    },
     "build": {
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
         "platform": "node",
-        "outputPath": "packages/linear-release-action/dist",
+        "outputPath": "dist/packages/linear-release-action",
         "format": ["cjs"],
-        "bundle": false,
         "main": "packages/linear-release-action/src/main.ts",
         "tsConfig": "packages/linear-release-action/tsconfig.app.json",
         "assets": ["packages/linear-release-action/src/assets"],
