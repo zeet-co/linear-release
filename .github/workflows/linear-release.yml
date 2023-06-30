@@ -11,6 +11,8 @@ jobs:
           fetch-depth: 0
       - name: Linear Release
         uses: zeet-co/linear-release/packages/linear-release-action@main
+        env:
+          LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
         # with:
         #   team: 'ZEET'
         #   from: 'In Staging'

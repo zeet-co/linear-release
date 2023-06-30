@@ -20,15 +20,6 @@ async function processPushEvent(event: PushEvent): Promise<void> {
   core.info(`The before commit is: ${event.before}`);
   core.info(`The after commit is: ${event.after}`);
 
-  // run ls in the current directory
-  const ls = await promisify(exec)('ls');
-  core.info(ls.stdout);
-
-  const ls2 = await promisify(exec)('git log', {
-    cwd: '.',
-  });
-  core.info(ls2.stdout);
-
   const pullRequests = await getPullRequests('.', event.before, 'HEAD');
   core.info(`The pull requests are: ${pullRequests}`);
 

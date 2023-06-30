@@ -20534,8 +20534,6 @@ var getLinearIssueStatus = (id) => __async(void 0, null, function* () {
 });
 
 // packages/linear-release-action/src/main.ts
-var import_child_process2 = require("child_process");
-var import_util2 = require("util");
 var linearTeam = "ZEET";
 var fromtState = "In Staging";
 var toState = "In Production";
@@ -20543,12 +20541,6 @@ function processPushEvent(event) {
   return __async(this, null, function* () {
     core.info(`The before commit is: ${event.before}`);
     core.info(`The after commit is: ${event.after}`);
-    const ls = yield (0, import_util2.promisify)(import_child_process2.exec)("ls");
-    core.info(ls.stdout);
-    const ls2 = yield (0, import_util2.promisify)(import_child_process2.exec)("git log", {
-      cwd: "."
-    });
-    core.info(ls2.stdout);
     const pullRequests = yield getPullRequests(".", event.before, "HEAD");
     core.info(`The pull requests are: ${pullRequests}`);
     const prodStatId = yield getLinearStateId(linearTeam, toState);
