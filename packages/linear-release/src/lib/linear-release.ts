@@ -40,6 +40,12 @@ export async function updateLinearState(
   });
 }
 
+export function getPullRequestsFromText(text: string): number[] {
+  const pullRequests = text.matchAll(/[( ]#(\d+)[) ]/g);
+
+  return [...pullRequests].map((pr) => parseInt(pr[1]));
+}
+
 export async function getPullRequests(
   workDir: string,
   before: string,
@@ -52,9 +58,7 @@ export async function getPullRequests(
   });
 
   // use regex to find pull requests
-  const pullRequests = stdout.matchAll(/\(#(\d+)\)\n/g);
-
-  return [...pullRequests].map((pr) => parseInt(pr[1]));
+  return getPullRequestsFromText(stdout);
 }
 
 const getPRComments = async (

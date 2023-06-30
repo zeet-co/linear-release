@@ -20494,14 +20494,17 @@ function updateLinearState(issueId, stateId) {
     });
   });
 }
+function getPullRequestsFromText(text) {
+  const pullRequests = text.matchAll(/[( ]#(\d+)[) ]/g);
+  return [...pullRequests].map((pr) => parseInt(pr[1]));
+}
 function getPullRequests(workDir, before, after) {
   return __async(this, null, function* () {
     const cmd = `git log ${after}...${before} --pretty="format:%s"`;
     const { stdout } = yield (0, import_util.promisify)(import_child_process.exec)(cmd, {
       cwd: workDir
     });
-    const pullRequests = stdout.matchAll(/\(#(\d+)\)\n/g);
-    return [...pullRequests].map((pr) => parseInt(pr[1]));
+    return getPullRequestsFromText(stdout);
   });
 }
 var getPRComments = (owner, repo, pull_number) => __async(void 0, null, function* () {
