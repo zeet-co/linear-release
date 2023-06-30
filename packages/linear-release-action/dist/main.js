@@ -20545,11 +20545,11 @@ function processPushEvent(event) {
     core.info(`The after commit is: ${event.after}`);
     const ls = yield (0, import_util2.promisify)(import_child_process2.exec)("ls");
     core.info(ls.stdout);
-    const ls2 = yield (0, import_util2.promisify)(import_child_process2.exec)("ls", {
+    const ls2 = yield (0, import_util2.promisify)(import_child_process2.exec)("git log", {
       cwd: "."
     });
     core.info(ls2.stdout);
-    const pullRequests = yield getPullRequests(".", event.before, event.after);
+    const pullRequests = yield getPullRequests(".", event.before, "HEAD");
     core.info(`The pull requests are: ${pullRequests}`);
     const prodStatId = yield getLinearStateId(linearTeam, toState);
     console.log(`Found production state ${prodStatId}`);

@@ -24,12 +24,12 @@ async function processPushEvent(event: PushEvent): Promise<void> {
   const ls = await promisify(exec)('ls');
   core.info(ls.stdout);
 
-  const ls2 = await promisify(exec)('ls', {
+  const ls2 = await promisify(exec)('git log', {
     cwd: '.',
   });
   core.info(ls2.stdout);
 
-  const pullRequests = await getPullRequests('.', event.before, event.after);
+  const pullRequests = await getPullRequests('.', event.before, 'HEAD');
   core.info(`The pull requests are: ${pullRequests}`);
 
   // list linear workflow production state
