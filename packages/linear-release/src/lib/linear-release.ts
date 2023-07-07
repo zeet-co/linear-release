@@ -75,10 +75,10 @@ const getPRComments = async (
   return comments;
 };
 
-const checkLinkAndExtractId = (comment: string) => {
-  const pattern = /linear\.app\/[\w-]+\/issue\/(\w+-\d+)\//;
-  const match = comment.match(pattern);
-  return match ? match[1] : null;
+export const extractLinearIdsFromText = (comment: string): string[] => {
+  const pattern = /linear\.app\/[\w-]+\/issue\/(\w+-\d+)\//g;
+  const match = comment.matchAll(pattern);
+  return [...match].map((m) => m[1]);
 };
 
 export const getLinearTicketsFromPR = async (
@@ -90,9 +90,9 @@ export const getLinearTicketsFromPR = async (
 
   const linearIds = new Set<string>();
   for (const comment of comments) {
-    const linearId = checkLinkAndExtractId(comment.body || '');
+    const ids = extractLinearIdsFromText(comment.body || '');
 
-    if (linearId) {
+    for (const linearId of ids) {
       linearIds.add(linearId);
     }
   }
