@@ -20515,17 +20515,17 @@ var getPRComments = (owner, repo, pull_number) => __async(void 0, null, function
   });
   return comments;
 });
-var checkLinkAndExtractId = (comment) => {
-  const pattern = /linear\.app\/[\w-]+\/issue\/(\w+-\d+)\//;
-  const match = comment.match(pattern);
-  return match ? match[1] : null;
+var extractLinearIdsFromText = (comment) => {
+  const pattern = /linear\.app\/[\w-]+\/issue\/(\w+-\d+)\//g;
+  const match = comment.matchAll(pattern);
+  return [...match].map((m) => m[1]);
 };
 var getLinearTicketsFromPR = (githubOwner, githubRepo, prNumber) => __async(void 0, null, function* () {
   const comments = yield getPRComments(githubOwner, githubRepo, prNumber);
   const linearIds = /* @__PURE__ */ new Set();
   for (const comment of comments) {
-    const linearId = checkLinkAndExtractId(comment.body || "");
-    if (linearId) {
+    const ids = extractLinearIdsFromText(comment.body || "");
+    for (const linearId of ids) {
       linearIds.add(linearId);
     }
   }
